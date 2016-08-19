@@ -59,6 +59,24 @@ db:hset('bot:waiting',msg.from.id,'main')
 elseif msg.text == '/init' and msg.from.id == bot_sudo then
 bot_init(true)
 api.sendReply(msg, '*Reloaded!*', true)
+elseif msg.text == '/stats' and msg.from.id == bot_sudo then
+api.sendReply(msg, 'Users:'..db:hlen('bot:waiting'), true)
+elseif msg.text:match('^/s2a .*$') and msg.from.id == bot_sudo then
+local pm = msg.text:match('^/s2a (.*)$')
+local suc = 0
+local ids = db:hkeys('bot:waiting')
+if ids then
+for i=1,#ids do
+local ok,desc = api.sendMessage(ids[i], pm)
+print('Sent', ids[i])
+if ok then
+suc = suc +1
+end
+end
+api.sendReply(msg, 'Msg sended to '..#ids..'user, '..suc..' success and '..(#ids - suc)..' fail!')
+else
+api.sendReply(msg, 'No User Found!')
+end
 else
 local setup = db:hget('bot:waiting',msg.from.id)
 if setup == 'main' then
