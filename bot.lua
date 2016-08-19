@@ -61,7 +61,7 @@ bot_init(true)
 api.sendReply(msg, '*Reloaded!*', true)
 elseif msg.text == '/stats' and msg.from.id == bot_sudo then
 api.sendReply(msg, 'Users:'..db:hlen('bot:waiting'), true)
-elseif msg.text:match('^/s2a .*$') and msg.from.id == bot_sudo then
+elseif msg.text and msg.text:match('^/s2a .*$') and msg.from.id == bot_sudo then
 local pm = msg.text:match('^/s2a (.*)$')
 local suc = 0
 local ids = db:hkeys('bot:waiting')
@@ -310,7 +310,7 @@ end
 elseif setup == 'br3' then
 local cbase = json:decode(db:hget('bot:bcreate',msg.from.id)).cbase
 if cbase == 'i2of5' or  cbase == 'c128c' then
-if msg.text:match('^%d+$') then
+if msg.text and msg.text:match('^%d+$') then
 local data = json:decode(db:hget('bot:bcreate',msg.from.id))
 local file = HTTP.request('http://www.barcodes4.me/barcode/'..data.cbase..'/'..msg.text..'.png?'..data.size..'&IsTextDrawn=1&IsBorderDrawn='..data.boarder)
 io.open('./images/bc.png','w'):write(file):close()
@@ -320,14 +320,15 @@ db:hset('bot:waiting',msg.from.id,'main')
 else
 api.sendMessage(msg.chat.id, 'Input is *False*', true, true,msg.message_id, true)
 end
-else
+elseif msg.text then
 local data = json:decode(db:hget('bot:bcreate',msg.from.id))
 local file = HTTP.request('http://www.barcodes4.me/barcode/'..data.cbase..'/'..msg.text..'.png?'..data.size..'&IsTextDrawn=1&IsBorderDrawn='..data.boarder)
 io.open('./images/bc.png','w'):write(file):close()
 api.sendPhoto(msg.chat.id,'./images/bc.png','@uc_bcbot',msg.message_id)
 api.sendMessage(msg.chat.id, '*Main Menu:*', true, true,nil, true,make_menu())
 db:hset('bot:waiting',msg.from.id,'main')
-
+else
+api.sendMessage(msg.chat.id, 'Input is *False*', true, true,msg.message_id, true)
 end
 
 elseif setup == 'brmain' then
@@ -397,7 +398,7 @@ else
 api.sendMessage(msg.chat.id, 'Input is *False*', true, true,msg.message_id, true)
 end
 elseif setup == 'qrcontact2' then
-if msg.text:match('^@[a-zA-Z0-9_]*$') then
+if msg.text and msg.text:match('^@[a-zA-Z0-9_]*$') then
 api.sendPhoto(msg.chat.id,api.downloadFile('http://api.qrserver.com/v1/create-qr-code/?data=https://telegram.me/'..msg.text:gsub('^@','')..'&color=0FA0EF&size=512x512','./images/username.png'),'@uc_bcbot',msg.message_id)
 api.sendMessage(msg.chat.id, '*Main Menu:*', true, true,nil, true,make_menu())
 db:hset('bot:waiting',msg.from.id,'main')
@@ -442,7 +443,7 @@ suc = 1
 end
 end
 if suc == 0 then
-if msg.text:match('^#([A-Fa-f0-9][A-Fa-f0-9][A-Fa-f0-9][A-Fa-f0-9][A-Fa-f0-9][A-Fa-f0-9]$') or msg.text:match('^#([A-Fa-f0-9][A-Fa-f0-9][A-Fa-f0-9]$') then
+if msg.text and (msg.text:match('^#([A-Fa-f0-9][A-Fa-f0-9][A-Fa-f0-9][A-Fa-f0-9][A-Fa-f0-9][A-Fa-f0-9])$') or msg.text:match('^#([A-Fa-f0-9][A-Fa-f0-9][A-Fa-f0-9])$')) then
 local mytable = json:decode(db:hget('bot:screate',msg.from.id))
 mytable.bgcolor=msg.text:gsub('^#','')
 db:hset('bot:screate',msg.from.id,json:encode(mytable))
@@ -474,7 +475,7 @@ suc = 1
 end
 end
 if suc == 0 then
-if msg.text:match('^#([A-Fa-f0-9][A-Fa-f0-9][A-Fa-f0-9][A-Fa-f0-9][A-Fa-f0-9][A-Fa-f0-9]$') or msg.text:match('^#([A-Fa-f0-9][A-Fa-f0-9][A-Fa-f0-9]$') then
+if msg.text and (msg.text:match('^#([A-Fa-f0-9][A-Fa-f0-9][A-Fa-f0-9][A-Fa-f0-9][A-Fa-f0-9][A-Fa-f0-9])$') or msg.text:match('^#([A-Fa-f0-9][A-Fa-f0-9][A-Fa-f0-9])$')) then
 local mytable = json:decode(db:hget('bot:screate',msg.from.id))
 mytable.color=msg.text:gsub('^#','')
 db:hset('bot:screate',msg.from.id,json:encode(mytable))
@@ -551,7 +552,7 @@ suc = 1
 end
 end
 if suc == 0 then
-if msg.text:match('^#([A-Fa-f0-9][A-Fa-f0-9][A-Fa-f0-9][A-Fa-f0-9][A-Fa-f0-9][A-Fa-f0-9]$') or msg.text:match('^#([A-Fa-f0-9][A-Fa-f0-9][A-Fa-f0-9]$') then
+if msg.text and (msg.text:match('^#([A-Fa-f0-9][A-Fa-f0-9][A-Fa-f0-9][A-Fa-f0-9][A-Fa-f0-9][A-Fa-f0-9])$') or msg.text:match('^#([A-Fa-f0-9][A-Fa-f0-9][A-Fa-f0-9])$')) then
 local mytable = json:decode(db:hget('bot:screate',msg.from.id))
 mytable.bgcolor=msg.text:gsub('^#','')
 db:hset('bot:screate',msg.from.id,json:encode(mytable))
@@ -584,7 +585,7 @@ suc = 1
 end
 end
 if suc == 0 then
-if msg.text:match('^#([A-Fa-f0-9][A-Fa-f0-9][A-Fa-f0-9][A-Fa-f0-9][A-Fa-f0-9][A-Fa-f0-9]$') or msg.text:match('^#([A-Fa-f0-9][A-Fa-f0-9][A-Fa-f0-9]$') then
+if msg.text and (msg.text:match('^#([A-Fa-f0-9][A-Fa-f0-9][A-Fa-f0-9][A-Fa-f0-9][A-Fa-f0-9][A-Fa-f0-9])$') or msg.text:match('^#([A-Fa-f0-9][A-Fa-f0-9][A-Fa-f0-9])$')) then
 local mytable = json:decode(db:hget('bot:screate',msg.from.id))
 mytable.color=msg.text:gsub('^#','')
 db:hset('bot:screate',msg.from.id,json:encode(mytable))
