@@ -13,11 +13,11 @@ git clone https://github.com/keplerproject/luarocks.git
 cd luarocks
 ./configure
 make build && make install
-$ sudo luarocks install luasocket
-$ sudo luarocks install luasec
-$ sudo luarocks install redis-lua
-$ sudo luarocks install fakeredis
-$ sudo luarocks install serpent
+sudo luarocks install luasocket
+sudo luarocks install luasec
+sudo luarocks install redis-lua
+sudo luarocks install fakeredis
+sudo luarocks install serpent
 cd ..
 git clone https://github.com/umbrellacopy/BCbot.git
 cd BCbot
