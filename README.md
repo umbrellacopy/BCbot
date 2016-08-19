@@ -19,7 +19,7 @@ $ sudo luarocks install redis-lua
 $ sudo luarocks install fakeredis
 $ sudo luarocks install serpent
 git clone https://github.com/umbrellacopy/BCbot.git
-cd BCbot
+cd ../BCbot
 sudo chmod 777 launch.sh
 ./launch.sh
 ```
