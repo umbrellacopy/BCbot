@@ -8,6 +8,7 @@ Installation
 ------------
 In botbase.lua set your token in field *bot_api_key* and set your id as sudo in field *bot_sudo*
 ```bash
+sudo apt-get install lua5.2 liblua5.2-dev
 git clone https://github.com/keplerproject/luarocks.git
 cd luarocks
 ./configure
