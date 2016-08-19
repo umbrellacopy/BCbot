@@ -195,10 +195,13 @@ local keyboard = {}
 {text = "Admin" , url = 'https://telegram.me/kingprogram'}
 },
 {
-{text = "RoBoT" , url = 'https://telegram.me/uc_bcbot'},
+{text = "RoBoT" , url = 'https://telegram.me/uc_bcbot'}
 },
 {
 {text = "Channel" , url = 'https://telegram.me/UmbrellaCopy'}
+},
+{
+{text = "Source" , url = 'https://github.com/UmbrellaCopy/bcbot'}
 }
 }
 api.sendMessage(msg.chat.id, pms, true, true,msg.message_id, true,keyboard)
