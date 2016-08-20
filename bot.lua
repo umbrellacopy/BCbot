@@ -634,8 +634,8 @@ else
 local qresult = {{}}
 qresult[1].id = '1'
  qresult[1].type = 'photo'
- qresult[1].photo_url = URL.escape('http://api.qrserver.com/v1/create-qr-code/?data=https://telegram.me/'..inline.query..'&margin=15&size=512x512')
- qresult[1].thumb_url = URL.escape('http://api.qrserver.com/v1/create-qr-code/?data=https://telegram.me/'..inline.query..'&margin=15&size=512x512')
+ qresult[1].photo_url = URL.escape('http://api.qrserver.com/v1/create-qr-code/?data='..inline.query..'&margin=15&size=512x512')
+ qresult[1].thumb_url = URL.escape('http://api.qrserver.com/v1/create-qr-code/?data='..inline.query..'&margin=15&size=512x512')
  qresult[1].caption = URL.escape('@uc_bcbot')
  api.sendInline(inline.id, qresult,0)
 end
